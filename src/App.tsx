@@ -8,6 +8,7 @@ import rootReducer from './reducers/index'
 
 
 import { getDates } from './api/index'
+import { WEEK } from './constants/index'
 
 getDates()
 
@@ -21,6 +22,7 @@ function App() {
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <p>
+            {WEEK[0]}
             Edit <code>src/App.tsx</code> and save to reload.
           </p>
           <a
