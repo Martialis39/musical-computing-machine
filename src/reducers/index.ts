@@ -1,8 +1,4 @@
-
-interface CalendarState {
-    today: Date,
-    startOfWeek: number
-}
+import { CalendarState } from '../types';
 
 const SET_START_OF_WEEK = 'SET_START_OF_WEEK'
 
