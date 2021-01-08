@@ -1,7 +1,11 @@
 import React from 'react'
-import { WEEK } from '../constants/index'
+
 import { CalendarState } from '../types'
 import { connect, ConnectedProps } from 'react-redux'
+
+import { CalendarPane } from './CalendarPane'
+
+import { generateWeekFromStartOfWeek } from '../utility/index'
 
 
 
@@ -25,7 +29,10 @@ interface Props extends PropsFromRedux {
 
 const Calendar = (props: Props) => {
     const { today } = props;
-    return <div>Yay, { WEEK[today] } </div>
+    const week = generateWeekFromStartOfWeek(today);
+    return <div className="calendar">
+      {week.map(day => <CalendarPane day={day} />)}
+      </div>
 }
   
   
