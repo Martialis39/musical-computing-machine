@@ -12,11 +12,7 @@ import { getDates } from './api/index'
 import Calendar from './components/Calendar';
 import { generateWeekFromStartOfWeek } from './utility';
 
-
-// getDates()
-
 const store = createStore(rootReducer)
-
 
 function App() {
   return (

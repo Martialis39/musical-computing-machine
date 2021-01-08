@@ -7,7 +7,7 @@ import { CalendarPane } from './CalendarPane'
 
 import { WEEK } from '../constants';
 
-import { generateWeekFromStartOfWeek } from '../utility/index'
+import { formatDate, generateWeekFromStartOfWeek } from '../utility/index'
 
 
 
@@ -39,7 +39,7 @@ const Calendar = (props: Props) => {
         <p>
         Hi, today is a
         </p>
-        <h2>{WEEK[startOfWeek]}</h2>
+        <h2>{WEEK[today.getDay() - 1]}</h2>
         <div className="calendar__select-day">
           <p>The week starts on a </p>
           <select onChange={e => {

@@ -2,7 +2,9 @@
 import { WEEK } from '../constants/index'
 
 export function addDays(date: Date, days: number) {
-    date.setDate(date.getDate() + days);
+    const d = new Date(date);
+    d.setDate(date.getDate() + days);
+    return d;
   }
 
 export function generateWeekFromStartOfWeek(n : number){
@@ -10,3 +12,10 @@ export function generateWeekFromStartOfWeek(n : number){
   const endOfWeek = WEEK.slice(0, n);
   return startOfWeek.concat(endOfWeek)
 }
+
+export function formatDate(date: Date){
+  const month = date.getMonth() + 1;
+  const day = date.getDate()
+  return `${date.getFullYear()}-${month < 10 ? '0'+month : month}-${day < 10 ? '0'+day : day}`
+}
+
