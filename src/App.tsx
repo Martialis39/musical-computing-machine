@@ -21,12 +21,9 @@ const store = createStore(rootReducer)
 function App() {
   return (
     <Provider store={store}>
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <Calendar />
-        </header>
-      </div>
+      <main className="app">
+        <Calendar />
+      </main>
     </Provider>
   );
 }
