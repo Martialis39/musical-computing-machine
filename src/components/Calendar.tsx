@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { CalendarState } from '../types'
 import { connect, ConnectedProps } from 'react-redux'
@@ -8,6 +8,7 @@ import { CalendarPane } from './CalendarPane'
 import { WEEK } from '../constants';
 
 import { formatDate, generateWeekFromStartOfWeek } from '../utility/index'
+import { useFetchDates } from '../hooks';
 
 
 
@@ -32,8 +33,15 @@ interface Props extends PropsFromRedux {
 
 const Calendar = (props: Props) => {
     const { today, startOfWeek: firstWeekDay } = props;
+    const [isLoading, fetchDates] = useFetchDates();
     const [startOfWeek, setStartOfWeek] = useState(firstWeekDay);
     const week = generateWeekFromStartOfWeek(startOfWeek);
+
+    useEffect(() => {
+      fetchDates("2019-02-01", "2019-02-28");
+    }, [])
+
+
     return <div className="calendar">
       <div className="calendar__intro">
         <p>

@@ -1,8 +1,5 @@
-
-export interface CalendarState {
-    today: Date,
-    startOfWeek: number
-}
+export const FOLK = 'folk';
+export const PUBLIC = 'public';
 
 const MONDAY = 'Monday';
 const TUESDAY = 'Tuesday';
@@ -11,6 +8,21 @@ const THURSDAY = 'Thursday';
 const FRIDAY = 'Friday';
 const SATURDAY = 'Saturday';
 const SUNDAY = 'Sunday';
+
+export interface Holiday {
+  name: string,
+  type: typeof PUBLIC | typeof FOLK
+}
+
+export interface Holidays {
+  [U: string]: Array<Holiday>
+}
+
+export interface CalendarState {
+    today: Date,
+    startOfWeek: number,
+    holidays: Holidays
+}
 
 export type DayOfTheWeek = typeof MONDAY
     | typeof TUESDAY

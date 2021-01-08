@@ -18,4 +18,3 @@ export function formatDate(date: Date){
   const day = date.getDate()
   return `${date.getFullYear()}-${month < 10 ? '0'+month : month}-${day < 10 ? '0'+day : day}`
 }
-
