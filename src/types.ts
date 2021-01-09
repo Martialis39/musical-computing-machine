@@ -21,7 +21,9 @@ export interface Holidays {
 export interface CalendarState {
     today: Date,
     startOfWeek: number,
-    holidays: Holidays
+    holidays: Holidays,
+    earliestDate: Date,
+    latestDate: Date
 }
 
 export type DayOfTheWeek = typeof MONDAY
