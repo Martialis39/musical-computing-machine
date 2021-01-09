@@ -1,8 +1,12 @@
-import { CalendarState, PUBLIC, FOLK } from '../types';
-import { getEarlierDate, getLaterDate } from '../utility';
+import { CalendarState, PUBLIC, FOLK, CHECK_HOLIDAYS, GET_HOLIDAYS, SET_DATES } from '../types';
+import { formatDate} from '../utility';
 
-const GET_HOLIDAYS = 'GET_HOLIDAYS'
-const SET_DATES = 'SET_DATES'
+
+
+interface checkHolidays {
+  type: typeof CHECK_HOLIDAYS
+  payload: [string, string]
+}
 
 interface GetHolidays {
   type: typeof GET_HOLIDAYS
@@ -24,13 +28,15 @@ interface Holidays {
 }
 
     
-type CalendarActionTypes = GetHolidays | SetEarliestLatestDates
+type CalendarActionTypes = GetHolidays | SetEarliestLatestDates | checkHolidays
+
+const todayAsString = formatDate(new Date())
 
 const initialState: CalendarState = {
     today: new Date(),
     holidays: {},
-    earliestDate: new Date(),
-    latestDate: new Date()
+    earliestDate: todayAsString,
+    latestDate: todayAsString
   }
   
 export default function chatReducer(
@@ -45,11 +51,11 @@ export default function chatReducer(
         }
       }
     case SET_DATES:
-      const [startDate, endDate] = action.payload;
+      const [start, end] = action.payload;
       return {
         ...state,
-        earliestDate: getEarlierDate(state.earliestDate, startDate),
-        latestDate: getLaterDate(state.latestDate, endDate)
+        earliestDate: start,
+        latestDate: end 
       }
     
     default:

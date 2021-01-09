@@ -9,6 +9,10 @@ const FRIDAY = 'Friday';
 const SATURDAY = 'Saturday';
 const SUNDAY = 'Sunday';
 
+export const GET_HOLIDAYS = 'GET_HOLIDAYS'
+export const SET_DATES = 'SET_DATES'
+export const CHECK_HOLIDAYS = 'CHECK_HOLIDAYS'
+
 export interface Holiday {
   name: string,
   type: typeof PUBLIC | typeof FOLK
@@ -21,8 +25,8 @@ export interface Holidays {
 export interface CalendarState {
     today: Date,
     holidays: Holidays,
-    earliestDate: Date,
-    latestDate: Date
+    earliestDate: any,
+    latestDate: any
 }
 
 export type DayOfTheWeek = typeof MONDAY

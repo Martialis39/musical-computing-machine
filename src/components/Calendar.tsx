@@ -9,7 +9,7 @@ import { WEEK } from '../constants';
 
 import { generateWeekFromStartOfWeek } from '../utility/index'
 import { useFetchDates } from '../hooks';
-import { debuglog } from 'util';
+import { formatDate } from '../utility/'
 
 const offsetByOneWeek = (prevState: number, stateHook: Function) => () => {
   stateHook(prevState + 7);
@@ -26,7 +26,9 @@ const renderWeek = (week : Array<any>, holidays: Holidays) => {
 const mapStateToProps = (state : CalendarState ) => {
     return {
       today: state.today,
-      holidays: state.holidays
+      holidays: state.holidays,
+      earliestDate: state.earliestDate,
+      latestDate: state.latestDate
     }
 }
 
@@ -38,11 +40,13 @@ type PropsFromRedux = ConnectedProps<typeof connector>
 
 interface Props extends PropsFromRedux {
   today: Date,
-  holidays: Holidays
+  holidays: Holidays,
+  earliestDate: string,
+  latestDate: string
 }
 
 const Calendar = (props: Props) => {
-    const { today, holidays } = props;
+    const { today, holidays, earliestDate, latestDate } = props;
     console.log("Hol ", holidays)
     const [isLoading, fetchDates] = useFetchDates();
     const [offsetDays, setOffsetDays] = useState(0);
@@ -52,7 +56,8 @@ const Calendar = (props: Props) => {
 
     useEffect(() => {
       console.log(week[0].date, week[week.length - 1].date)
-      fetchDates(week[0].date, week[week.length - 1].date);
+      const [start, end] = [week[0].date, week[week.length - 1].date]
+      fetchDates(start, end, earliestDate, latestDate);
     }, [offsetDays])
 
 

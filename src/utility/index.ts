@@ -53,3 +53,13 @@ export function getLaterDate(date1: Date, date2: Date){
     }
   }
 }
+
+export function isFirstEarlierThanSecond(first: Date, second: Date) : Boolean {
+  if(first.getTime() === second.getTime()){
+    return false
+  } else if (first < second){
+    return true
+  } else {
+    return false
+  }
+}
