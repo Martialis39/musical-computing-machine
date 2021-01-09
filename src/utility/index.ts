@@ -7,10 +7,13 @@ export function addDays(date: Date, days: number) {
     return d;
   }
 
-export function generateWeekFromStartOfWeek(n : number){
-  const startOfWeek = WEEK.slice(n);
-  const endOfWeek = WEEK.slice(0, n);
-  return startOfWeek.concat(endOfWeek)
+export function generateWeekFromStartOfWeek(startOfW : number, today : Date): Array<any> {
+  if(today.getDay() === startOfW){
+    return new Array(7).fill(new Date()).map((day, index) => {
+      return formatDate(addDays(today, index));
+    })
+  }
+  return generateWeekFromStartOfWeek(startOfW, addDays(today, -1));
 }
 
 export function formatDate(date: Date){

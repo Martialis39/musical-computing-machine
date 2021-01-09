@@ -7,7 +7,7 @@ import { CalendarPane } from './CalendarPane'
 
 import { WEEK } from '../constants';
 
-import { formatDate, generateWeekFromStartOfWeek } from '../utility/index'
+import { generateWeekFromStartOfWeek } from '../utility/index'
 import { useFetchDates } from '../hooks';
 
 
@@ -32,8 +32,8 @@ interface Props extends PropsFromRedux {
 const Calendar = (props: Props) => {
     const { today } = props;
     const [isLoading, fetchDates] = useFetchDates();
-    const [startOfWeek, setStartOfWeek] = useState(0);
-    const week = generateWeekFromStartOfWeek(startOfWeek);
+    const [startOfWeek, setStartOfWeek] = useState(1);
+    const week = generateWeekFromStartOfWeek(startOfWeek, today);
 
     useEffect(() => {
       fetchDates("2019-02-01", "2019-02-28");
@@ -58,7 +58,7 @@ const Calendar = (props: Props) => {
         </div>
       </div>
       <div className="calendar-body">
-      {week.map(day => <CalendarPane day={day} />)}
+      {week.map(( day : string ) => <CalendarPane day={day} />)}
       </div>
     </div>
 }
