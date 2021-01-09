@@ -4,12 +4,13 @@ import { CalendarState, Holidays } from '../types'
 import { connect, ConnectedProps } from 'react-redux'
 
 import { CalendarPane } from './CalendarPane'
+import { ReactComponent as ArrowIcon } from '../assets/ArrowIcon.svg'
 
 import { WEEK } from '../constants';
 
 import { generateWeekFromStartOfWeek } from '../utility/index'
 import { useFetchDates } from '../hooks';
-import { formatDate } from '../utility/'
+
 
 const offsetByOneWeek = (prevState: number, stateHook: Function) => () => {
   stateHook(prevState + 7);
@@ -61,23 +62,21 @@ const Calendar = (props: Props) => {
     }, [offsetDays])
 
 
-    return <div className="calendar">
-      <div className="buttons">
-        <button onClick={offsetMinusOneWeek(offsetDays, setOffsetDays)}>
-          Left
-        </button>
-        <button onClick={offsetByOneWeek(offsetDays, setOffsetDays)}>
-          Right
-        </button>
-      </div>
-      <div className="calendar__intro">
-        <p>
+    return <div className="relative px-10 pt-5 pb-16 mx-auto shadow w-full max-w-xl">
+          <button className="absolute inset-y-0 left-0"onClick={offsetMinusOneWeek(offsetDays, setOffsetDays)}>
+            <ArrowIcon className="text-sm lg:text-base" />
+          </button>
+          <button className="absolute inset-y-0 right-0"onClick={offsetByOneWeek(offsetDays, setOffsetDays)}>
+            <ArrowIcon className="text-sm lg:text-base transform rotate-180"/>
+          </button>
+      <div className="mb-6">
+        <p className="text-xl md:text-2xl">
         Hi, today is a
         </p>
-        <h2>{WEEK[today.getDay()]}</h2>
-        <div className="calendar__select-day">
-          <p>The week starts on a </p>
-          <select value={startOfWeek} onChange={e => {
+        <h2 className="text-4xl xl:text-8xl font-bold mb-1">{WEEK[today.getDay()]}</h2>
+        <div>
+          <span className="text-xl md:text-2xl font-light" >The week starts on a </span>
+          <select className="inline-block text-xl md:text-2xl font-bold" value={startOfWeek} onChange={e => {
             setStartOfWeek(Number(e.target.value))
           }}>
             {WEEK.map((day, i) => {
@@ -86,7 +85,7 @@ const Calendar = (props: Props) => {
           </select>
         </div>
       </div>
-      <div className="calendar-body">
+      <div className="w-full flex justify-center flex-col md:flex-row">
         {renderWeek(week, holidays)}
       </div>
     </div>
