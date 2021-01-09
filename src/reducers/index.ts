@@ -40,7 +40,9 @@ export default function chatReducer(
   switch (action.type) {
     case GET_HOLIDAYS:
       return {
-        ...state, holidays: action.payload
+        ...state, holidays: {
+          ... state.holidays, ...action.payload
+        }
       }
     case SET_DATES:
       const [startDate, endDate] = action.payload;

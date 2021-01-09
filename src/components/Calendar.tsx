@@ -9,6 +9,7 @@ import { WEEK } from '../constants';
 
 import { generateWeekFromStartOfWeek } from '../utility/index'
 import { useFetchDates } from '../hooks';
+import { debuglog } from 'util';
 
 const offsetByOneWeek = (prevState: number, stateHook: Function) => () => {
   stateHook(prevState + 7);
@@ -42,6 +43,7 @@ interface Props extends PropsFromRedux {
 
 const Calendar = (props: Props) => {
     const { today, holidays } = props;
+    console.log("Hol ", holidays)
     const [isLoading, fetchDates] = useFetchDates();
     const [offsetDays, setOffsetDays] = useState(0);
     const [startOfWeek, setStartOfWeek] = useState(0);
@@ -49,8 +51,9 @@ const Calendar = (props: Props) => {
 
 
     useEffect(() => {
+      console.log(week[0].date, week[week.length - 1].date)
       fetchDates(week[0].date, week[week.length - 1].date);
-    }, [])
+    }, [offsetDays])
 
 
     return <div className="calendar">
@@ -73,7 +76,6 @@ const Calendar = (props: Props) => {
             setStartOfWeek(Number(e.target.value))
           }}>
             {WEEK.map((day, i) => {
-              console.log('value is', i)
               return <option value={i}>{day}</option>
             })}
           </select>

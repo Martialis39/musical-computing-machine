@@ -10,12 +10,9 @@ export function addDays(date: Date, days: number) {
 export function generateWeekFromStartOfWeek(startOfW : number, today : Date, offset: number): Array<any> {
   if(today.getDay() === startOfW){
     return new Array(7).fill(new Date()).map((day, index) => {
-      console.log(day);
       const date = addDays(today, index + offset);
-      const i = date.getDay();
-      const n = WEEK[i]
       return {
-        name: n,
+        name: WEEK[date.getDay()],
         date: formatDate(date)
       };
     });
