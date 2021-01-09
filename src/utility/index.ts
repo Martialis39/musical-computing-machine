@@ -7,11 +7,11 @@ export function addDays(date: Date, days: number) {
     return d;
   }
 
-export function generateWeekFromStartOfWeek(startOfW : number, today : Date): Array<any> {
+export function generateWeekFromStartOfWeek(startOfW : number, today : Date, offset: number): Array<any> {
   if(today.getDay() === startOfW){
     return new Array(7).fill(new Date()).map((day, index) => {
       console.log(day);
-      const date = addDays(today, index);
+      const date = addDays(today, index + offset);
       const i = date.getDay();
       const n = WEEK[i]
       return {
@@ -20,7 +20,7 @@ export function generateWeekFromStartOfWeek(startOfW : number, today : Date): Ar
       };
     });
   };
-  return generateWeekFromStartOfWeek(startOfW, addDays(today, -1));
+  return generateWeekFromStartOfWeek(startOfW, addDays(today, -1), offset);
 }
 
 export function formatDate(date: Date){

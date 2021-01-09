@@ -10,8 +10,15 @@ import { WEEK } from '../constants';
 import { generateWeekFromStartOfWeek } from '../utility/index'
 import { useFetchDates } from '../hooks';
 
+const offsetByOneWeek = (prevState: number, stateHook: Function) => () => {
+  stateHook(prevState + 7);
+}
+
+const offsetMinusOneWeek = (prevState: number, stateHook: Function) => () => {
+  stateHook(prevState - 7);
+}
+
 const renderWeek = (week : Array<any>, holidays: Holidays) => {
-   debugger
    return week.map(day => <CalendarPane day={day} holidays={holidays[day.date]}/>)
 }
 
@@ -36,8 +43,9 @@ interface Props extends PropsFromRedux {
 const Calendar = (props: Props) => {
     const { today, holidays } = props;
     const [isLoading, fetchDates] = useFetchDates();
+    const [offsetDays, setOffsetDays] = useState(0);
     const [startOfWeek, setStartOfWeek] = useState(0);
-    const week = generateWeekFromStartOfWeek(startOfWeek, today);
+    const week = generateWeekFromStartOfWeek(startOfWeek, today, offsetDays);
 
 
     useEffect(() => {
@@ -46,6 +54,14 @@ const Calendar = (props: Props) => {
 
 
     return <div className="calendar">
+      <div className="buttons">
+        <button onClick={offsetMinusOneWeek(offsetDays, setOffsetDays)}>
+          Left
+        </button>
+        <button onClick={offsetByOneWeek(offsetDays, setOffsetDays)}>
+          Right
+        </button>
+      </div>
       <div className="calendar__intro">
         <p>
         Hi, today is a
