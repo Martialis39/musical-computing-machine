@@ -8,11 +8,19 @@ export function addDays(date: Date, days: number) {
   }
 
 export function generateWeekFromStartOfWeek(startOfW : number, today : Date): Array<any> {
+  debugger
   if(today.getDay() === startOfW){
     return new Array(7).fill(new Date()).map((day, index) => {
-      return formatDate(addDays(today, index));
-    })
-  }
+      console.log(day);
+      const date = addDays(today, index);
+      const i = date.getDay();
+      const n = WEEK[i]
+      return {
+        name: n,
+        date: formatDate(date)
+      };
+    });
+  };
   return generateWeekFromStartOfWeek(startOfW, addDays(today, -1));
 }
 

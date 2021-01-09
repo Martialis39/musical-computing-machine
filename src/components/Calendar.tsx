@@ -32,7 +32,7 @@ interface Props extends PropsFromRedux {
 const Calendar = (props: Props) => {
     const { today } = props;
     const [isLoading, fetchDates] = useFetchDates();
-    const [startOfWeek, setStartOfWeek] = useState(1);
+    const [startOfWeek, setStartOfWeek] = useState(0);
     const week = generateWeekFromStartOfWeek(startOfWeek, today);
 
     useEffect(() => {
@@ -45,20 +45,21 @@ const Calendar = (props: Props) => {
         <p>
         Hi, today is a
         </p>
-        <h2>{WEEK[today.getDay() - 1]}</h2>
+        <h2>{WEEK[today.getDay()]}</h2>
         <div className="calendar__select-day">
           <p>The week starts on a </p>
-          <select onChange={e => {
+          <select value={startOfWeek} onChange={e => {
             setStartOfWeek(Number(e.target.value))
           }}>
             {WEEK.map((day, i) => {
+              console.log('value is', i)
               return <option value={i}>{day}</option>
             })}
           </select>
         </div>
       </div>
       <div className="calendar-body">
-      {week.map(( day : string ) => <CalendarPane day={day} />)}
+      {week.map(( day ) => <CalendarPane day={day} />)}
       </div>
     </div>
 }
