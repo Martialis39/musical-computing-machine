@@ -8,7 +8,6 @@ export function addDays(date: Date, days: number) {
   }
 
 export function generateWeekFromStartOfWeek(startOfW : number, today : Date): Array<any> {
-  debugger
   if(today.getDay() === startOfW){
     return new Array(7).fill(new Date()).map((day, index) => {
       console.log(day);

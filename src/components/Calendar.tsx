@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-import { CalendarState } from '../types'
+import { CalendarState, Holidays } from '../types'
 import { connect, ConnectedProps } from 'react-redux'
 
 import { CalendarPane } from './CalendarPane'
@@ -10,33 +10,38 @@ import { WEEK } from '../constants';
 import { generateWeekFromStartOfWeek } from '../utility/index'
 import { useFetchDates } from '../hooks';
 
-
+const renderWeek = (week : Array<any>, holidays: Holidays) => {
+   debugger
+   return week.map(day => <CalendarPane day={day} holidays={holidays[day.date]}/>)
+}
 
 const mapStateToProps = (state : CalendarState ) => {
     return {
       today: state.today,
+      holidays: state.holidays
     }
 }
 
 const connector = connect(
   mapStateToProps,
-
 )
 
 type PropsFromRedux = ConnectedProps<typeof connector>
 
 interface Props extends PropsFromRedux {
   today: Date,
+  holidays: Holidays
 }
 
 const Calendar = (props: Props) => {
-    const { today } = props;
+    const { today, holidays } = props;
     const [isLoading, fetchDates] = useFetchDates();
     const [startOfWeek, setStartOfWeek] = useState(0);
     const week = generateWeekFromStartOfWeek(startOfWeek, today);
 
+
     useEffect(() => {
-      fetchDates("2019-02-01", "2019-02-28");
+      fetchDates(week[0].date, week[week.length - 1].date);
     }, [])
 
 
@@ -59,7 +64,7 @@ const Calendar = (props: Props) => {
         </div>
       </div>
       <div className="calendar-body">
-      {week.map(( day ) => <CalendarPane day={day} />)}
+        {renderWeek(week, holidays)}
       </div>
     </div>
 }
