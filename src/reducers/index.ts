@@ -1,14 +1,8 @@
 import { CalendarState, PUBLIC, FOLK } from '../types';
 import { getEarlierDate, getLaterDate } from '../utility';
 
-const SET_START_OF_WEEK = 'SET_START_OF_WEEK'
 const GET_HOLIDAYS = 'GET_HOLIDAYS'
 const SET_DATES = 'SET_DATES'
-
-interface SetStartOfWeekAction {
-  type: typeof SET_START_OF_WEEK
-  payload: number
-}
 
 interface GetHolidays {
   type: typeof GET_HOLIDAYS
@@ -30,11 +24,10 @@ interface Holidays {
 }
 
     
-type CalendarActionTypes = SetStartOfWeekAction | GetHolidays | SetEarliestLatestDates
+type CalendarActionTypes = GetHolidays | SetEarliestLatestDates
 
 const initialState: CalendarState = {
     today: new Date(),
-    startOfWeek: 0,
     holidays: {},
     earliestDate: new Date(),
     latestDate: new Date()
@@ -45,10 +38,6 @@ export default function chatReducer(
   action: CalendarActionTypes
 ): CalendarState {
   switch (action.type) {
-    case SET_START_OF_WEEK:
-      return {
-        ...state, startOfWeek: action.payload
-      }
     case GET_HOLIDAYS:
       return {
         ...state, holidays: action.payload

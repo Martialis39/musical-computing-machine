@@ -20,7 +20,6 @@ export interface Holidays {
 
 export interface CalendarState {
     today: Date,
-    startOfWeek: number,
     holidays: Holidays,
     earliestDate: Date,
     latestDate: Date

@@ -15,7 +15,6 @@ import { useFetchDates } from '../hooks';
 const mapStateToProps = (state : CalendarState ) => {
     return {
       today: state.today,
-      startOfWeek: state.startOfWeek
     }
 }
 
@@ -28,13 +27,12 @@ type PropsFromRedux = ConnectedProps<typeof connector>
 
 interface Props extends PropsFromRedux {
   today: Date,
-  startOfWeek: number
 }
 
 const Calendar = (props: Props) => {
-    const { today, startOfWeek: firstWeekDay } = props;
+    const { today } = props;
     const [isLoading, fetchDates] = useFetchDates();
-    const [startOfWeek, setStartOfWeek] = useState(firstWeekDay);
+    const [startOfWeek, setStartOfWeek] = useState(0);
     const week = generateWeekFromStartOfWeek(startOfWeek);
 
     useEffect(() => {
