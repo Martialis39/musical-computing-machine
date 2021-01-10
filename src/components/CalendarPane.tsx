@@ -1,5 +1,5 @@
 import React from 'react'
-import { Holidays, Holiday, PUBLIC } from '../types';
+import { Holiday, PUBLIC } from '../types';
 
 
 interface Props {

@@ -48,7 +48,6 @@ interface Props extends PropsFromRedux {
 
 const Calendar = (props: Props) => {
     const { today, holidays, earliestDate, latestDate } = props;
-    console.log("Hol ", today)
     const [fetchDates] = useFetchDates();
     const [offsetDays, setOffsetDays] = useState(0);
     const [startOfWeek, setStartOfWeek] = useState(0);
@@ -56,7 +55,6 @@ const Calendar = (props: Props) => {
 
 
     useEffect(() => {
-      console.log(week[0].date, week[week.length - 1].date)
       const [start, end] = [week[0].date, week[week.length - 1].date]
       fetchDates(start, end, earliestDate, latestDate);
     }, [offsetDays, week, earliestDate, latestDate, fetchDates])
