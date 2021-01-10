@@ -17,6 +17,8 @@ Note that this was developed on Chrome and thus, Chrome is recommended for the o
 
 A production version of this app is running on `https://calendar.martpart.ee/`.
 
+_PLEASE NOTE_ : I had some issues with PostCSS. It seems to be dependent on the node version. I recommend using node version `14.12.0` (that is the one on my development machine and I can confirm is working)
+
 ## Available Scripts
 
 ### `npm run start`
