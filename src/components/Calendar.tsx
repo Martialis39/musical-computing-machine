@@ -8,7 +8,7 @@ import { ReactComponent as ArrowIcon } from '../assets/ArrowIcon.svg'
 
 import { WEEK } from '../constants';
 
-import { generateWeekFromStartOfWeek } from '../utility/index'
+import { formatDate, generateWeekFromStartOfWeek } from '../utility/index'
 import { useFetchDates } from '../hooks';
 
 
@@ -20,8 +20,8 @@ const offsetMinusOneWeek = (prevState: number, stateHook: Function) => () => {
   stateHook(prevState - 7);
 }
 
-const renderWeek = (week : Array<any>, holidays: Holidays) => {
-   return week.map(day => <CalendarPane day={day} holidays={holidays[day.date]}/>)
+const renderWeek = (week : Array<any>, holidays: Holidays, today: string) => {
+   return week.map(day => <CalendarPane key={day.date} day={day} holidays={holidays[day.date]} today={today} />)
 }
 
 const mapStateToProps = (state : CalendarState ) => {
@@ -48,8 +48,8 @@ interface Props extends PropsFromRedux {
 
 const Calendar = (props: Props) => {
     const { today, holidays, earliestDate, latestDate } = props;
-    console.log("Hol ", holidays)
-    const [isLoading, fetchDates] = useFetchDates();
+    console.log("Hol ", today)
+    const [fetchDates] = useFetchDates();
     const [offsetDays, setOffsetDays] = useState(0);
     const [startOfWeek, setStartOfWeek] = useState(0);
     const week = generateWeekFromStartOfWeek(startOfWeek, today, offsetDays);
@@ -59,16 +59,20 @@ const Calendar = (props: Props) => {
       console.log(week[0].date, week[week.length - 1].date)
       const [start, end] = [week[0].date, week[week.length - 1].date]
       fetchDates(start, end, earliestDate, latestDate);
-    }, [offsetDays])
+    }, [offsetDays, week, earliestDate, latestDate, fetchDates])
 
 
     return <div className="relative px-10 pt-5 pb-16 mx-auto shadow w-full max-w-xl">
-          <button className="absolute inset-y-0 left-0"onClick={offsetMinusOneWeek(offsetDays, setOffsetDays)}>
-            <ArrowIcon className="text-sm lg:text-base" />
-          </button>
-          <button className="absolute inset-y-0 right-0"onClick={offsetByOneWeek(offsetDays, setOffsetDays)}>
+        <div className="flex items-center absolute inset-y-0 left-0">
+            <button onClick={offsetMinusOneWeek(offsetDays, setOffsetDays)}>
+              <ArrowIcon className="text-sm lg:text-base" />
+            </button>
+        </div>
+        <div className="flex items-center absolute inset-y-0 right-0">
+          <button onClick={offsetByOneWeek(offsetDays, setOffsetDays)}>
             <ArrowIcon className="text-sm lg:text-base transform rotate-180"/>
           </button>
+        </div>
       <div className="mb-6">
         <p className="text-xl md:text-2xl">
         Hi, today is a
@@ -86,7 +90,7 @@ const Calendar = (props: Props) => {
         </div>
       </div>
       <div className="w-full flex justify-center flex-col md:flex-row">
-        {renderWeek(week, holidays)}
+        {renderWeek(week, holidays, formatDate(today))}
       </div>
     </div>
 }
